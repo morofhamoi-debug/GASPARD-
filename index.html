@@ -33,8 +33,6 @@
   --shadow:0 8px 28px rgba(0,0,0,.55); --shadow-lg:0 20px 60px rgba(0,0,0,.7);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-
-/* === ЗАПРЕТ ЗУМА И ЖЕСТОВ ПРИБЛИЖЕНИЯ === */
 html,body{
   height:100%;
   -webkit-text-size-adjust:100%;
@@ -51,13 +49,11 @@ body{
 }
 input,textarea{
   -webkit-user-select:text;user-select:text;
-  font-size:16px; /* чтобы iOS не зумил при фокусе на инпуте */
+  font-size:16px;
 }
-/* Блокируем мультитач и двойной тап */
 *{touch-action:manipulation}
 .gallery, .gallery *{touch-action:pan-x pan-y}
 .tabs, .filters-row{touch-action:pan-x pan-y}
-
 body::before{
   content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
   background:
@@ -75,12 +71,10 @@ input,select,textarea{
 input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(10,132,255,.15)}
 textarea{resize:vertical;min-height:70px;font-family:inherit}
 select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238e8e93' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
-
 #app{display:flex;min-height:100vh;width:100%}
 #sidebar{display:none}
 #main{flex:1;min-width:0;display:flex;flex-direction:column;padding-top:var(--sat)}
 #content{flex:1;padding:14px 14px calc(var(--nav-h) + var(--sab) + 24px);max-width:1400px;width:100%;margin:0 auto}
-
 @media (min-width:960px){
   #sidebar{
     display:flex;flex-direction:column;width:250px;flex-shrink:0;padding:24px 14px;
@@ -102,12 +96,10 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
   .nav-item.active{background:var(--accent);color:#fff;box-shadow:0 8px 20px rgba(10,132,255,.28)}
   .nav-item .ic{display:grid;place-items:center;width:20px}
 }
-
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 8px;gap:12px}
 .greet{font-size:13px;color:var(--text-3);font-weight:500}
 .title{font-size:26px;font-weight:700;letter-spacing:-.02em;margin-top:2px}
 .hdr-actions{display:flex;gap:8px}
-
 #bottomnav{
   position:fixed;bottom:0;left:0;right:0;z-index:50;display:flex;
   padding:6px 6px calc(6px + var(--sab));
@@ -122,7 +114,6 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 .nav-btn .ic{display:grid;place-items:center}
 .nav-btn.active{color:var(--accent)}
 .nav-btn:active{background:var(--border)}
-
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
   padding:11px 16px;border-radius:12px;font-weight:600;font-size:14px;
@@ -136,7 +127,6 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 .btn.small{padding:8px 12px;font-size:13px;border-radius:10px}
 .btn.icon{padding:10px;width:42px;height:42px;border-radius:12px}
 .btn:disabled{opacity:.5;pointer-events:none}
-
 .card{
   background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
   padding:16px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:var(--shadow);
@@ -144,7 +134,6 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 .card.tight{padding:12px}
 .card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px}
 .card-title{font-size:13px;font-weight:600;color:var(--text-2);letter-spacing:.04em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
-
 .metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 @media (min-width:700px){.metrics{grid-template-columns:repeat(3,1fr)}}
 @media (min-width:1100px){.metrics{grid-template-columns:repeat(6,1fr)}}
@@ -161,16 +150,13 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 .metric.orange .val{color:var(--orange)}
 .metric.purple .val{color:var(--purple)}
 .metric.blue .val{color:var(--accent)}
-
 .tabs{display:flex;gap:6px;overflow-x:auto;padding:4px;background:var(--bg-card);border:1px solid var(--border);border-radius:14px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tab{padding:8px 12px;border-radius:10px;font-size:13px;font-weight:600;color:var(--text-2);white-space:nowrap;transition:all .15s}
 .tab.active{background:var(--bg-solid);color:var(--text);box-shadow:var(--shadow)}
 .tab:active{transform:scale(.96)}
-
 .grid-products{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
 @media (min-width:700px){.grid-products{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}}
-
 .product{
   background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
   overflow:hidden;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
@@ -201,7 +187,6 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 .badge.fav{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.4);width:30px;height:30px;padding:0;display:grid;place-items:center;color:#ffcc00;border-radius:999px}
 .badge.fav.on{color:#ffcc00}
 .badge.fav:not(.on){color:rgba(255,255,255,.9)}
-
 .prod-actions{
   display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:auto;
   width:100%;min-width:0;
@@ -209,8 +194,6 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 .prod-actions .btn{
   min-width:0;overflow:hidden;text-overflow:ellipsis;padding:8px 8px;font-size:12.5px;
 }
-
-/* Цветовые свотчи в карточке товара */
 .color-dots{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
 .color-dot{
   width:18px;height:18px;border-radius:999px;border:2px solid var(--border-2);
@@ -218,8 +201,6 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 }
 .color-dot:active{transform:scale(.9)}
 .color-dot.active{box-shadow:0 0 0 2px var(--accent);border-color:var(--accent)}
-
-/* Цветовые свотчи в детальной карточке */
 .color-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 14px}
 .color-item{
   display:flex;flex-direction:column;align-items:center;gap:4px;
@@ -233,8 +214,6 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 }
 .color-item .nm{font-size:11px;font-weight:600;color:var(--text-2);text-align:center;max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .color-item .qty{font-size:10.5px;color:var(--text-3)}
-
-/* Редактор цветов в форме товара */
 .color-editor{display:flex;flex-direction:column;gap:10px}
 .color-card{
   background:var(--bg-solid);border:1px solid var(--border);border-radius:14px;
@@ -273,7 +252,6 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 }
 .color-size-row .sz-nm{font-weight:700;min-width:26px}
 .color-size-row input{width:54px;padding:4px 6px;text-align:center;font-size:13px;border-radius:8px}
-
 .search-wrap{position:relative;margin-bottom:10px}
 .search-wrap input{padding-left:40px;background:var(--bg-card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
 .search-wrap .ic{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-3);pointer-events:none}
@@ -287,12 +265,10 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 }
 .chip.active{background:var(--accent);color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(10,132,255,.28)}
 .chip:active{transform:scale(.96)}
-
 .section{margin-bottom:22px}
 .section-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:8px}
 .section-title{font-size:20px;font-weight:700;letter-spacing:-.02em;display:flex;align-items:center;gap:10px}
 .section-sub{font-size:13px;color:var(--text-3)}
-
 .row{
   display:flex;align-items:center;gap:12px;padding:12px;
   background:var(--bg-card);border:1px solid var(--border);border-radius:14px;
@@ -305,7 +281,6 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 .row .amount{font-weight:700;font-size:14px;white-space:nowrap}
 .row .amount.pos{color:var(--green)}
 .row .amount.neg{color:var(--red)}
-
 .status{padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap;display:inline-flex;align-items:center;gap:5px}
 .status.blue{background:rgba(10,132,255,.15);color:var(--accent)}
 .status.purple{background:rgba(175,82,222,.15);color:var(--purple)}
@@ -314,12 +289,10 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 .status.yellow{background:rgba(255,204,0,.18);color:#b58900}
 .status.green{background:rgba(52,199,89,.15);color:var(--green)}
 .status.red{background:rgba(255,59,48,.15);color:var(--red)}
-
 .empty{text-align:center;padding:50px 20px;color:var(--text-2)}
 .empty .icon{margin-bottom:14px;opacity:.55;display:flex;justify-content:center}
 .empty .t{font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px}
 .empty .s{font-size:14px;color:var(--text-3);margin-bottom:20px;max-width:320px;margin-left:auto;margin-right:auto}
-
 .modal-backdrop{
   position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
   z-index:100;display:flex;align-items:flex-end;justify-content:center;animation:fadeIn .18s ease;
@@ -340,7 +313,6 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
 @keyframes popIn{from{transform:scale(.95);opacity:0}to{transform:scale(1);opacity:1}}
-
 .form-row{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
 .form-row label{font-size:12.5px;font-weight:600;color:var(--text-3);padding-left:2px}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -348,7 +320,6 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 .form-section{margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border)}
 .form-section:last-child{border-bottom:0;padding-bottom:0}
 .form-section-title{font-size:13px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px}
-
 .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:10px}
 .photo-item{aspect-ratio:1;border-radius:12px;overflow:hidden;position:relative;background:var(--border);border:2px solid transparent}
 .photo-item img{width:100%;height:100%;object-fit:cover;display:block}
@@ -362,14 +333,12 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
   aspect-ratio:1;border-radius:12px;border:2px dashed var(--border-2);background:transparent;
   display:grid;place-items:center;color:var(--text-3);
 }
-
 .size-editor{display:flex;flex-direction:column;gap:6px}
 .size-row{display:flex;align-items:center;gap:8px;padding:6px 0}
 .size-row .chk{width:22px;height:22px;border-radius:6px;background:var(--bg-solid);border:1.5px solid var(--border-2);display:grid;place-items:center;color:#fff;flex-shrink:0}
 .size-row .chk.on{background:var(--accent);border-color:var(--accent)}
 .size-row .nm{width:52px;font-weight:700;font-size:14px}
 .size-row input[type=number]{width:78px;padding:8px 10px;text-align:center}
-
 .stock-row{display:flex;align-items:center;gap:8px;padding:6px 0;justify-content:space-between}
 .stock-row .sz{width:48px;font-weight:700;font-size:13px}
 .stock-row .ctl{display:flex;align-items:center;gap:6px}
@@ -378,7 +347,6 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 .stock-row .val{min-width:38px;text-align:center;font-weight:700;font-size:15px}
 .stock-row .val.zero{color:var(--red)}
 .stock-row .none{color:var(--text-3);font-weight:600;font-size:13px}
-
 .gallery{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;margin-bottom:14px;scrollbar-width:none;border-radius:16px}
 .gallery::-webkit-scrollbar{display:none}
 .gallery .slide{flex:0 0 100%;scroll-snap-align:start;aspect-ratio:1;border-radius:16px;overflow:hidden;background:var(--border)}
@@ -387,17 +355,14 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 .gallery-dots .d{width:6px;height:6px;border-radius:999px;background:var(--border-2);transition:all .2s}
 .gallery-dots .d.on{background:var(--accent);width:18px}
 .gallery-placeholder{aspect-ratio:1;border-radius:16px;background:var(--border);display:grid;place-items:center;color:var(--text-3);margin-bottom:14px}
-
 .info-list{display:flex;flex-direction:column;gap:0}
 .info-item{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);gap:14px;font-size:14px}
 .info-item:last-child{border-bottom:0}
 .info-item .k{color:var(--text-3);flex-shrink:0}
 .info-item .v{font-weight:600;text-align:right;word-break:break-word}
-
 .hist{display:flex;flex-direction:column;gap:6px}
 .hist-item{padding:10px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;font-size:13px}
 .hist-time{font-size:11px;color:var(--text-3);margin-bottom:2px}
-
 #toasts{position:fixed;top:calc(var(--sat) + 12px);left:50%;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:8px;pointer-events:none;width:calc(100% - 32px);max-width:380px}
 .toast{
   padding:12px 16px;border-radius:14px;background:var(--bg-elevated);
@@ -411,7 +376,6 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 .toast.info{border-color:rgba(10,132,255,.4)}
 .toast.info .ic{color:var(--accent)}
 @keyframes toastIn{from{transform:translateY(-20px);opacity:0}to{transform:translateY(0);opacity:1}}
-
 .sheet-list{display:flex;flex-direction:column;gap:0}
 .sheet-item{
   display:flex;align-items:center;gap:14px;padding:16px 8px;border-bottom:1px solid var(--border);
@@ -420,27 +384,22 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 .sheet-item:active{background:var(--border)}
 .sheet-item:last-child{border-bottom:0}
 .sheet-item .ic{display:grid;place-items:center;color:var(--text-2)}
-
 .chart-box{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:var(--shadow)}
 .chart-box svg{width:100%;height:auto;display:block}
 .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--text-2);margin-top:10px;justify-content:center}
 .legend .l{display:flex;align-items:center;gap:6px}
 .legend .dot{width:10px;height:10px;border-radius:3px}
-
 .bar-row{margin-bottom:12px}
 .bar-row .h{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;gap:10px}
 .bar-row .h .nm{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bar-row .h .vl{color:var(--text-3);flex-shrink:0}
 .bar-track{height:8px;background:var(--border);border-radius:999px;overflow:hidden}
 .bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:999px;transition:width .4s}
-
 .seg{display:flex;gap:4px;padding:4px;background:var(--bg-solid);border:1px solid var(--border);border-radius:12px;width:100%}
 .seg button{flex:1;padding:9px;border-radius:9px;font-weight:600;font-size:13px;color:var(--text-2);display:flex;align-items:center;justify-content:center;gap:6px}
 .seg button.active{background:var(--accent);color:#fff}
-
 .confirm-modal{max-width:400px}
 .confirm-msg{font-size:15px;color:var(--text-2);line-height:1.5;padding:8px 0 16px}
-
 .muted{color:var(--text-3)}
 .mt-8{margin-top:8px}.mt-12{margin-top:12px}.mt-16{margin-top:16px}.mt-24{margin-top:24px}
 .row-flex{display:flex;gap:8px;align-items:center}
@@ -448,7 +407,6 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 .nowrap{white-space:nowrap}
 .hidden{display:none!important}
 .center{text-align:center}
-
 #sync-badge{
   position:fixed;top:calc(var(--sat) + 8px);right:12px;z-index:60;
   padding:6px 10px;border-radius:999px;background:var(--bg-card);
@@ -459,7 +417,6 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 #sync-badge.online{color:var(--green)}
 #sync-badge.offline{color:var(--red)}
 #sync-badge .dot{width:7px;height:7px;border-radius:999px;background:currentColor}
-
 .guest-wrap{max-width:1100px;margin:0 auto;padding:16px 14px calc(24px + var(--sab))}
 .guest-hero{text-align:center;padding:24px 16px 20px}
 .guest-hero .brand-icon{
@@ -477,10 +434,6 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 }
 .guest-size b{color:var(--text);font-weight:700;margin-left:3px}
 .guest-footer{text-align:center;padding:20px 0;color:var(--text-3);font-size:12px}
-
-/* ============================================================
-   БРЕНД GASPARD FASHION — красивый serif-шрифт
-============================================================ */
 .gaspard-brand{
   font-family:'Playfair Display', Georgia, 'Times New Roman', serif;
   font-weight: 700;
@@ -513,6 +466,19 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 .guest-hero h1 .gaspard-brand{ font-size: 30px; }
 .guest-footer .gaspard-brand{ font-size: 13px; }
 .dash-brand{ font-size: 30px; margin-top: 2px; }
+/* Калькулятор прибыли в форме продажи и карточке товара */
+.profit-calc{
+  background:var(--bg-solid);border:1px solid var(--border);border-radius:12px;
+  padding:12px;font-size:13px;
+}
+.profit-calc .row-pc{display:flex;justify-content:space-between;padding:4px 0;gap:10px;align-items:center}
+.profit-calc .row-pc .k{color:var(--text-3)}
+.profit-calc .row-pc .v{font-weight:600;white-space:nowrap}
+.profit-calc .row-pc.minus .v{color:var(--red)}
+.profit-calc .row-pc.plus{color:var(--green);font-weight:700;font-size:15px;border-top:1px dashed var(--border);margin-top:6px;padding-top:8px}
+.profit-calc .row-pc.plus .k{color:var(--green);font-weight:700}
+.profit-calc .row-pc.plus .v{color:var(--green)}
+.delivery-line{font-size:11.5px;color:var(--orange);margin-top:-2px}
 </style>
 </head>
 <body>
@@ -537,47 +503,27 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
    ЗАПРЕТ ЗУМА — блокируем все жесты приближения
 ============================================================ */
 (function preventZoom(){
-  // Блокируем pinch-to-zoom через gesture events (Safari)
   document.addEventListener('gesturestart', function(e){ e.preventDefault(); }, {passive:false});
   document.addEventListener('gesturechange', function(e){ e.preventDefault(); }, {passive:false});
   document.addEventListener('gestureend', function(e){ e.preventDefault(); }, {passive:false});
-
-  // Блокируем мультитач (двухпальцевые жесты) — через touchmove
   document.addEventListener('touchmove', function(e){
-    if(e.touches && e.touches.length > 1){
-      e.preventDefault();
-    }
+    if(e.touches && e.touches.length > 1){ e.preventDefault(); }
   }, {passive:false});
-
-  // Блокируем двойной тап (iOS Safari зумит по двойному тапу)
   let lastTouchEnd = 0;
   document.addEventListener('touchend', function(e){
     const now = Date.now();
-    if(now - lastTouchEnd <= 300){
-      e.preventDefault();
-    }
+    if(now - lastTouchEnd <= 300){ e.preventDefault(); }
     lastTouchEnd = now;
   }, {passive:false});
-
-  // Блокируем ctrl+wheel zoom (десктоп) и cmd+wheel на Mac
   document.addEventListener('wheel', function(e){
     if(e.ctrlKey || e.metaKey){ e.preventDefault(); }
   }, {passive:false});
-
-  // Блокируем ctrl + '+' / '-' / '0' на десктопе
   document.addEventListener('keydown', function(e){
-    if((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '=' || e.key === '0')){
-      e.preventDefault();
-    }
+    if((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '=' || e.key === '0')){ e.preventDefault(); }
   }, {passive:false});
-
-  // Дополнительно: периодически сбрасываем viewport scale (некоторые браузеры всё равно пытаются)
   let lastWidth = window.innerWidth;
   window.addEventListener('resize', function(){
-    // Если ширина viewport внезапно стала меньше — это попытка зума, перезагружаем viewport
-    if(Math.abs(window.innerWidth - lastWidth) > 10){
-      lastWidth = window.innerWidth;
-    }
+    if(Math.abs(window.innerWidth - lastWidth) > 10){ lastWidth = window.innerWidth; }
   });
 })();
 
@@ -734,18 +680,35 @@ function colorToCss(hex){
   return h;
 }
 /**
- * Реальная себестоимость одной единицы товара с учётом доставки партии.
- * Формула: purchasePrice + deliveryCost / purchaseQty
- * Если доставка не указана или кол-во = 0 — возвращает просто purchasePrice.
+ * Доля доставки на одну единицу товара.
+ */
+function deliveryPerUnit(p){
+  const qty = Number(p.purchaseQty)||0;
+  const delivery = Number(p.deliveryCost)||0;
+  if(qty > 0 && delivery > 0){ return delivery / qty; }
+  return 0;
+}
+/**
+ * Реальная себестоимость = закупка + доля доставки на 1 шт.
  */
 function effectivePurchasePrice(p){
-  const qty = Number(p.purchaseQty)||0;
-  const cost = Number(p.purchasePrice)||0;
-  const delivery = Number(p.deliveryCost)||0;
-  if(qty > 0 && delivery > 0){
-    return cost + (delivery / qty);
-  }
-  return cost;
+  return (Number(p.purchasePrice)||0) + deliveryPerUnit(p);
+}
+/**
+ * Прибыль с одной единицы товара.
+ */
+function profitPerUnit(p){
+  return (Number(p.salePrice)||0) - effectivePurchasePrice(p);
+}
+/**
+ * Прибыль с заказа (с учётом разбивки).
+ */
+function orderProfit(o){
+  const price = Number(o.price)||0;
+  const purchase = Number(o.purchasePrice)||0;
+  const dShare = Number(o.deliveryShare)||0;
+  const qty = Number(o.quantity)||0;
+  return (price - purchase - dShare) * qty;
 }
 
 /* ============================================================
@@ -958,6 +921,7 @@ function dbToOrder(r){
     photoId: r.photo_id||null,
     size: r.size, quantity: r.quantity, price: Number(r.price)||0,
     purchasePrice: Number(r.purchase_price)||0,
+    deliveryShare: Number(r.delivery_share)||0,
     deliveryCost: Number(r.delivery_cost)||0,
     total: Number(r.total)||0, profit: Number(r.profit)||0,
     status: r.status||'Новый',
@@ -974,6 +938,7 @@ function orderToDb(o){
     photo_id: o.photoId||null,
     size: o.size, quantity: o.quantity, price: o.price||0,
     purchase_price: o.purchasePrice||0,
+    delivery_share: o.deliveryShare||0,
     delivery_cost: o.deliveryCost||0,
     total: o.total||0, profit: o.profit||0,
     status: o.status||'Новый',
@@ -1301,7 +1266,8 @@ function calcStats(period='all'){
   const from = periodStart(period);
   const orders = state.orders.filter(o => o.date >= from && o.status !== 'Отменён');
   const revenue = orders.reduce((s,o)=>s + Number(o.total||0), 0);
-  const cogs = orders.reduce((s,o)=>s + (Number(o.purchasePrice||0) * Number(o.quantity||0)), 0);
+  // Себестоимость проданного = (закупка + доля доставки) * количество
+  const cogs = orders.reduce((s,o)=>s + ((Number(o.purchasePrice||0) + Number(o.deliveryShare||0)) * Number(o.quantity||0)), 0);
   const grossProfit = revenue - cogs;
   const expenses = state.expenses.filter(e => e.date >= from).reduce((s,e)=>s+Number(e.amount||0),0);
   const netProfit = grossProfit - expenses;
@@ -1509,7 +1475,6 @@ function viewGuest(){
 
 function guestCard(p){
   const hasColors = p.colors && p.colors.length > 0;
-  // Для гостя показываем только цвета с наличием
   const visibleColors = hasColors
     ? p.colors.filter(c => colorTotal(c) > 0)
     : [];
@@ -1517,8 +1482,6 @@ function guestCard(p){
     ? getPhotoURL(productMainPhoto(p, visibleColors[0]?.id))
     : getPhotoURL(productMainPhoto(p));
 
-  // Сводка остатков: если есть цвета — только для цветов с наличием;
-  // иначе — по sizes товара.
   let summary = {};
   if(hasColors){
     for(const c of visibleColors){
@@ -1623,7 +1586,6 @@ function openGuestProduct(id){
     title: 'Товар',
     bodyHTML: renderBody(),
     onMount: (root) => {
-      // Обработчик клика по цвету в детальной карточке
       root.addEventListener('click', (e) => {
         const t = e.target.closest('[data-action="guest-color"]');
         if(!t) return;
@@ -1688,7 +1650,7 @@ function buildPeriodChart(period){
       const k = keyOf(new Date(o.date));
       if(!months[k]) continue;
       months[k].rev += Number(o.total||0);
-      months[k].cogs += Number(o.purchasePrice||0)*Number(o.quantity||0);
+      months[k].cogs += (Number(o.purchasePrice||0) + Number(o.deliveryShare||0)) * Number(o.quantity||0);
     }
     for(const e of state.expenses){
       if(e.date < from) continue;
@@ -1718,7 +1680,7 @@ function buildPeriodChart(period){
       const idx = dayList.findIndex(d=>d.getTime()===od.getTime());
       if(idx>=0){
         buckets[idx].rev += Number(o.total||0);
-        buckets[idx].cogs += Number(o.purchasePrice||0)*Number(o.quantity||0);
+        buckets[idx].cogs += (Number(o.purchasePrice||0) + Number(o.deliveryShare||0)) * Number(o.quantity||0);
       }
     }
     for(const e of state.expenses){
@@ -1896,7 +1858,7 @@ function viewInventory(){
       case 'old': return (a.createdAt||0)-(b.createdAt||0);
       case 'stock-up': return productStockSummary(a).total - productStockSummary(b).total;
       case 'stock-down': return productStockSummary(b).total - productStockSummary(a).total;
-      case 'profit': return ((b.salePrice||0)-(b.purchasePrice||0)) - ((a.salePrice||0)-(a.purchasePrice||0));
+      case 'profit': return profitPerUnit(b) - profitPerUnit(a);
       case 'popular': return (b.soldCount||0)-(a.soldCount||0);
       default: return (b.createdAt||0)-(a.createdAt||0);
     }
@@ -1967,9 +1929,9 @@ function productCard(p){
   const img = getPhotoURL(productMainPhoto(p));
   const {total} = productStockSummary(p);
   const st = productStatus(p);
-  const unitCost = effectivePurchasePrice(p);
-  const hasDelivery = Number(p.deliveryCost) > 0;
-  const profit = (Number(p.salePrice)||0) - unitCost;
+  const dPU = deliveryPerUnit(p);
+  const hasDelivery = dPU > 0;
+  const profit = profitPerUnit(p);
   const sizes = productEffectiveSizes(p);
   const usedSizes = Object.keys(sizes).filter(k=>sizes[k] != null);
   return `
@@ -1991,9 +1953,10 @@ function productCard(p){
         ` : ''}
         <div class="prices">
           <div class="price-sale">${fmt(p.salePrice)}</div>
-          ${p.purchasePrice ? `<div>${hasDelivery ? 'себест. ' : 'закуп '}${fmt(unitCost)}</div>` : ''}
+          ${p.purchasePrice ? `<div>закуп ${fmt(p.purchasePrice)}</div>` : ''}
         </div>
-        ${profit>0 ? `<div class="price-profit">+${fmt(profit)} / шт.</div>` : ''}
+        ${hasDelivery ? `<div class="delivery-line">+ доставка ${fmt(dPU)} / шт</div>` : ''}
+        ${profit>0 ? `<div class="price-profit">= +${fmt(profit)} / шт.</div>` : ''}
         <div class="sizes-mini">
           ${usedSizes.length === 0 ? '<span class="muted" style="font-size:11.5px">Без размеров</span>' :
             usedSizes.map(k => {
@@ -2015,7 +1978,7 @@ function productCard(p){
 }
 
 /* ============================================================
-   PRODUCT FORM (с цветами и доставкой)
+   PRODUCT FORM
 ============================================================ */
 function allSizes(){
   const set = new Set([...BASE_SIZES, ...state.customSizes]);
@@ -2024,7 +1987,7 @@ function allSizes(){
 }
 let formPhotos = [];
 let formMainPhoto = null;
-let formColors = []; // [{ id, name, hex, photos:[], mainPhoto, sizes:{} }]
+let formColors = [];
 
 function openProductForm(productId){
   const editing = productId ? state.products.find(p=>p.id===productId) : null;
@@ -2109,7 +2072,7 @@ function openProductForm(productId){
       '</div>' +
       '<div class="form-grid mt-12">' +
         '<div class="form-row"><label>Доставка за партию, '+escapeHTML(state.settings.currency)+'</label><input type="number" min="0" step="0.01" id="f-delivery" value="'+(editing?.deliveryCost||'')+'" placeholder="430"></div>' +
-        '<div class="form-row"><label>Себестоимость за штуку</label><input type="text" id="f-unit-cost" readonly placeholder="—" style="background:var(--border);cursor:default"></div>' +
+        '<div class="form-row"><label>Доставка на 1 шт (авто)</label><input type="text" id="f-unit-delivery" readonly placeholder="—" style="background:var(--border);cursor:default"></div>' +
       '</div>' +
       '<div class="form-row"><label>Описание</label><textarea id="f-desc" placeholder="Комментарий о товаре">'+escapeHTML(editing?.description||'')+'</textarea></div>' +
     '</div>';
@@ -2169,7 +2132,6 @@ function openProductForm(productId){
         });
       });
 
-      // Кнопка "Прикрепить цвет"
       $('#add-color-btn', root).addEventListener('click', () => {
         formColors.push({
           id: uid(),
@@ -2186,19 +2148,18 @@ function openProductForm(productId){
       const priceEl = $('#f-purchase', root);
       const totalEl = $('#f-total', root);
       const deliveryEl = $('#f-delivery', root);
-      const unitCostEl = $('#f-unit-cost', root);
+      const unitDeliveryEl = $('#f-unit-delivery', root);
       const curSym = state.settings.currency || '₽';
       const recalc = () => {
         const q = Number(qtyEl.value)||0;
         const p = Number(priceEl.value)||0;
         const d = Number(deliveryEl.value)||0;
         if(q && p) totalEl.value = Math.round(q*p*100)/100;
-        if(unitCostEl){
-          if(q > 0){
-            const unit = p + d/q;
-            unitCostEl.value = (Math.round(unit*100)/100).toLocaleString('ru-RU') + ' ' + curSym;
+        if(unitDeliveryEl){
+          if(q > 0 && d > 0){
+            unitDeliveryEl.value = (Math.round((d/q)*100)/100).toLocaleString('ru-RU') + ' ' + curSym;
           } else {
-            unitCostEl.value = '';
+            unitDeliveryEl.value = '';
           }
         }
       };
@@ -2207,7 +2168,6 @@ function openProductForm(productId){
       deliveryEl.addEventListener('input', recalc);
       recalc();
 
-      // Сохранение
       $('#save-product', root).addEventListener('click', async () => {
         const name = $('#f-name', root).value.trim();
         if(!name){ toast('Укажите название товара','error'); return; }
@@ -2221,7 +2181,6 @@ function openProductForm(productId){
           }
         });
 
-        // Считываем цвета из редактора
         const colors = [];
         $$('.color-card', root).forEach(card => {
           const cid = card.getAttribute('data-color-id');
@@ -2321,7 +2280,6 @@ function renderPhotoGrid(root){
   });
 }
 
-/* --- Рендер редактора цветов внутри формы товара --- */
 function renderColorEditor(root){
   const ed = $('#color-editor', root);
   if(!ed) return;
@@ -2363,8 +2321,6 @@ function renderColorEditor(root){
     </div>`;
   }).join('');
 
-  // --- Обработчики ---
-  // Изменение hex / name
   ed.querySelectorAll('[data-color-hex]').forEach(inp => {
     inp.addEventListener('input', () => {
       const card = inp.closest('.color-card');
@@ -2381,7 +2337,6 @@ function renderColorEditor(root){
       if(c) c.name = inp.value;
     });
   });
-  // Размеры
   ed.querySelectorAll('[data-color-size]').forEach(inp => {
     inp.addEventListener('input', () => {
       const cid = inp.getAttribute('data-color');
@@ -2393,7 +2348,6 @@ function renderColorEditor(root){
       else { c.sizes[sz] = Math.max(0, Math.floor(Number(raw)||0)); }
     });
   });
-  // Удалить цвет
   ed.querySelectorAll('[data-color-del]').forEach(btn => {
     btn.addEventListener('click', () => {
       const cid = btn.getAttribute('data-color');
@@ -2403,7 +2357,6 @@ function renderColorEditor(root){
       }, 'Удалить');
     });
   });
-  // Выбрать главное фото цвета
   ed.querySelectorAll('[data-color-photo]').forEach(el => {
     el.addEventListener('click', (e) => {
       if(e.target.closest('[data-color-photo-del]')) return;
@@ -2413,7 +2366,6 @@ function renderColorEditor(root){
       if(c){ c.mainPhoto = pid; renderColorEditor(root); }
     });
   });
-  // Удалить фото цвета
   ed.querySelectorAll('[data-color-photo-del]').forEach(btn => {
     btn.addEventListener('click', async (e) => {
       e.stopPropagation();
@@ -2429,7 +2381,6 @@ function renderColorEditor(root){
       renderColorEditor(root);
     });
   });
-  // Добавить фото к цвету
   ed.querySelectorAll('[data-color-add-photo]').forEach(btn => {
     btn.addEventListener('click', () => {
       const cid = btn.getAttribute('data-color');
@@ -2437,7 +2388,6 @@ function renderColorEditor(root){
       if(fileInput) fileInput.click();
     });
   });
-  // Обработка загрузки файлов
   ed.querySelectorAll('[data-color-file]').forEach(fi => {
     fi.addEventListener('change', async (e) => {
       const cid = fi.getAttribute('data-color-file');
@@ -2464,12 +2414,9 @@ function openProductDetail(productId){
   const p = state.products.find(x=>x.id===productId);
   if(!p) return;
   const hasColors = p.colors && p.colors.length > 0;
-
-  // Определяем стартовый цвет
   let selectedColorId = hasColors ? p.colors[0].id : null;
 
   const renderBody = () => {
-    // Фото
     let photos;
     let mainIdx = 0;
     if(hasColors && selectedColorId){
@@ -2488,12 +2435,12 @@ function openProductDetail(productId){
 
     const {total} = productStockSummary(p);
     const st = productStatus(p);
+    const dPU = deliveryPerUnit(p);
+    const hasDelivery = dPU > 0;
     const unitCost = effectivePurchasePrice(p);
-    const hasDelivery = Number(p.deliveryCost) > 0;
-    const profit = (Number(p.salePrice)||0) - unitCost;
+    const profit = profitPerUnit(p);
     const supplier = state.suppliers.find(s=>s.id===p.supplierId);
 
-    // Размеры — с учётом цвета
     let sizes = {};
     if(hasColors && selectedColorId){
       const c = p.colors.find(x=>x.id===selectedColorId);
@@ -2540,10 +2487,11 @@ function openProductDetail(productId){
     '<div class="info-list" style="margin-bottom:14px">' +
       (p.sku ? '<div class="info-item"><div class="k">Артикул</div><div class="v">'+escapeHTML(p.sku)+'</div></div>' : '') +
       (p.purchasePrice ? '<div class="info-item"><div class="k">Закупка у поставщика</div><div class="v">'+fmt(p.purchasePrice)+'</div></div>' : '') +
-      (hasDelivery ? '<div class="info-item"><div class="k">Доставка за партию</div><div class="v">'+fmt(p.deliveryCost)+'</div></div>' : '') +
-      (hasDelivery && Number(p.purchaseQty) > 0 ? '<div class="info-item"><div class="k">Себестоимость за штуку</div><div class="v" style="color:var(--orange)">'+fmt(unitCost)+'</div></div>' : '') +
+      (hasDelivery && p.purchaseQty ? '<div class="info-item"><div class="k">Доставка за партию</div><div class="v">'+fmt(p.deliveryCost)+' ('+p.purchaseQty+' шт)</div></div>' : '') +
+      (hasDelivery ? '<div class="info-item"><div class="k">Доставка на 1 шт</div><div class="v" style="color:var(--orange)">'+fmt(dPU)+'</div></div>' : '') +
+      (hasDelivery ? '<div class="info-item"><div class="k">Себестоимость 1 шт</div><div class="v">'+fmt(unitCost)+'</div></div>' : '') +
       (p.salePrice ? '<div class="info-item"><div class="k">Продажа</div><div class="v">'+fmt(p.salePrice)+'</div></div>' : '') +
-      (profit>0 ? '<div class="info-item"><div class="k">Прибыль / шт.</div><div class="v" style="color:var(--green)">+'+fmt(profit)+'</div></div>' : '') +
+      (profit>0 ? '<div class="info-item"><div class="k">Прибыль / шт.</div><div class="v" style="color:var(--green);font-weight:700">'+fmt(p.salePrice)+' − '+fmt(p.purchasePrice)+' − '+fmt(dPU)+' = +'+fmt(profit)+'</div></div>' : '') +
       '<div class="info-item"><div class="k">Всего на складе</div><div class="v">'+total+' шт.</div></div>' +
       (hasColors ? '<div class="info-item"><div class="k">Цветов</div><div class="v">'+p.colors.length+'</div></div>' : '') +
       (p.purchaseQty ? '<div class="info-item"><div class="k">Закуплено</div><div class="v">'+p.purchaseQty+' шт.</div></div>' : '') +
@@ -2597,7 +2545,6 @@ function openProductDetail(productId){
       '<button class="btn danger" data-action="delete-product" data-id="'+p.id+'">'+ic('trash',16)+'</button>' +
       '<button class="btn primary" data-action="sell" data-id="'+p.id+'" '+(productStockSummary(p).total===0?'disabled':'')+'>Продать</button>',
     onMount: (root) => {
-      // Скролл галереи обновляет точки
       root.addEventListener('scroll', (e) => {
         const gal = e.target.closest && e.target.closest('.gallery');
       }, true);
@@ -2614,7 +2561,6 @@ function openProductDetail(productId){
       };
       attachGallery();
 
-      // Клик по цвету — обновляем содержимое модалки
       root.addEventListener('click', (e) => {
         const t = e.target.closest('[data-action="select-color"]');
         if(!t) return;
@@ -2668,17 +2614,13 @@ function changeStock(productId, size, delta, colorId){
 }
 
 /* ============================================================
-   SALE MODAL — с выбором цвета и учётом доставки
+   SALE MODAL — с прозрачным расчётом прибыли
 ============================================================ */
 function openSaleModal(productId){
   const p = state.products.find(x=>x.id===productId);
   if(!p) return;
   const hasColors = p.colors && p.colors.length > 0;
-
-  // Список цветов, где есть хоть какой-то остаток
-  const availColors = hasColors
-    ? p.colors.filter(c => colorTotal(c) > 0)
-    : [];
+  const availColors = hasColors ? p.colors.filter(c => colorTotal(c) > 0) : [];
 
   if(hasColors && availColors.length === 0){ toast('Нет товара в наличии','error'); return; }
   if(!hasColors){
@@ -2687,8 +2629,9 @@ function openSaleModal(productId){
   }
 
   let selectedColorId = hasColors ? availColors[0].id : null;
-  const unitCost = effectivePurchasePrice(p);
-  const hasDelivery = Number(p.deliveryCost) > 0;
+  const rawPurchase = Number(p.purchasePrice)||0;
+  const dPU = deliveryPerUnit(p);
+  const hasDelivery = dPU > 0;
 
   const sizeOptionsHTML = () => {
     let sizesList = [];
@@ -2702,6 +2645,25 @@ function openSaleModal(productId){
     }
     if(sizesList.length === 0) return '<option value="">— нет размеров —</option>';
     return sizesList.map(x=>`<option value="${escapeHTML(x.sz)}">${escapeHTML(x.sz)} · в наличии ${x.q}</option>`).join('');
+  };
+
+  const renderProfitCalc = () => {
+    const qty = Math.max(1, Number($('#sale-qty')?.value)||1);
+    const price = Number($('#sale-price')?.value)||0;
+    const deliveryToClient = Number($('#sale-delivery')?.value)||0;
+    const revenue = price * qty;
+    const purchaseSum = rawPurchase * qty;
+    const deliveryShareSum = dPU * qty;
+    const profit = revenue - purchaseSum - deliveryShareSum - deliveryToClient;
+    return `
+      <div class="profit-calc">
+        <div class="row-pc"><span class="k">Продажа (${qty} шт × ${fmt(price)})</span><span class="v">${fmt(revenue)}</span></div>
+        <div class="row-pc minus"><span class="k">− Закупка (${qty} шт × ${fmt(rawPurchase)})</span><span class="v">−${fmt(purchaseSum)}</span></div>
+        ${hasDelivery ? `<div class="row-pc minus"><span class="k">− Доставка поставщика (${qty} шт × ${fmt(dPU)})</span><span class="v">−${fmt(deliveryShareSum)}</span></div>` : ''}
+        ${deliveryToClient > 0 ? `<div class="row-pc minus"><span class="k">− Доставка клиенту</span><span class="v">−${fmt(deliveryToClient)}</span></div>` : ''}
+        <div class="row-pc plus"><span class="k">= Прибыль</span><span class="v">${profit >= 0 ? '+' : ''}${fmt(profit)}</span></div>
+      </div>
+    `;
   };
 
   const body =
@@ -2720,20 +2682,19 @@ function openSaleModal(productId){
       '<div class="form-row"><label>Количество</label><input type="number" min="1" step="1" id="sale-qty" value="1"></div>' +
       '<div class="form-row"><label>Цена за единицу</label><input type="number" min="0" step="0.01" id="sale-price" value="'+(p.salePrice||'')+'"></div>' +
     '</div>' +
-    (hasDelivery ? '<div class="section-sub" style="margin-top:-4px;margin-bottom:12px">Себестоимость за штуку: <b style="color:var(--orange)">'+fmt(unitCost)+'</b> · Прибыль с продажи: <b style="color:var(--green)">+'+fmt((Number(p.salePrice)||0) - unitCost)+' ₽</b></div>' : '') +
     '<div class="form-grid">' +
-      '<div class="form-row"><label>Доставка (от вас клиенту)</label><input type="number" min="0" step="0.01" id="sale-delivery" value="0"></div>' +
+      '<div class="form-row"><label>Доставка клиенту (если есть)</label><input type="number" min="0" step="0.01" id="sale-delivery" value="0"></div>' +
       '<div class="form-row"><label>Клиент</label><input id="sale-customer" placeholder="Имя / ник"></div>' +
     '</div>' +
-    '<div class="form-row"><label>Статус</label><select id="sale-status">' +
+    '<div id="profit-calc-wrap">'+renderProfitCalc()+'</div>' +
+    '<div class="form-row" style="margin-top:12px"><label>Статус</label><select id="sale-status">' +
       ORDER_STATUSES.map(s=>'<option value="'+s+'" '+(s==='Оплачен'?'selected':'')+'>'+s+'</option>').join('') +
     '</select></div>' +
     '<div class="form-row"><label>Служба доставки</label><select id="sale-service">' +
       '<option value="">—</option>' +
       DELIVERY_SERVICES.map(s=>'<option value="'+s+'">'+s+'</option>').join('') +
     '</select></div>' +
-    '<div class="form-row"><label>Трек-номер</label><input id="sale-track" placeholder="1234567890"></div>' +
-    '<div class="card tight mt-12" id="sale-total"><b>Итого: '+fmt((p.salePrice||0))+'</b></div>';
+    '<div class="form-row"><label>Трек-номер</label><input id="sale-track" placeholder="1234567890"></div>';
 
   openModal({
     title: 'Продажа',
@@ -2747,6 +2708,7 @@ function openSaleModal(productId){
       const qtyEl = $('#sale-qty', root);
       const priceEl = $('#sale-price', root);
       const delEl = $('#sale-delivery', root);
+      const calcWrap = $('#profit-calc-wrap', root);
 
       const getCurrentMax = () => {
         if(hasColors && selectedColorId){
@@ -2757,11 +2719,8 @@ function openSaleModal(productId){
         return p.sizes[sizeEl.value] || 0;
       };
 
-      const recalc = () => {
-        const q = Math.max(1, Number(qtyEl.value)||1);
-        const pr = Number(priceEl.value)||0;
-        const dl = Number(delEl.value)||0;
-        $('#sale-total', root).innerHTML = '<b>Итого: '+fmt(q*pr + dl)+'</b>';
+      const updateCalc = () => {
+        calcWrap.innerHTML = renderProfitCalc();
       };
 
       if(colorEl){
@@ -2770,24 +2729,25 @@ function openSaleModal(productId){
           sizeEl.innerHTML = sizeOptionsHTML();
           qtyEl.max = getCurrentMax();
           if(Number(qtyEl.value) > qtyEl.max) qtyEl.value = qtyEl.max || 1;
-          recalc();
+          updateCalc();
         });
       }
       sizeEl.addEventListener('change', () => {
         const max = getCurrentMax();
         if(Number(qtyEl.value) > max) qtyEl.value = max;
         qtyEl.max = max;
+        updateCalc();
       });
-      [qtyEl, priceEl, delEl].forEach(e=>e.addEventListener('input', recalc));
+      [qtyEl, priceEl, delEl].forEach(e=>e.addEventListener('input', updateCalc));
       qtyEl.max = getCurrentMax();
-      recalc();
+      updateCalc();
 
       $('#sale-confirm', root).addEventListener('click', () => {
         const size = sizeEl.value;
         if(!size){ toast('Выберите размер','error'); return; }
         const qty = Math.max(1, Math.floor(Number(qtyEl.value)||1));
         const price = Number(priceEl.value)||0;
-        const delivery = Number(delEl.value)||0;
+        const deliveryToClient = Number(delEl.value)||0;
 
         let cur;
         let colorName = '';
@@ -2807,7 +2767,6 @@ function openSaleModal(productId){
         const service = $('#sale-service', root).value;
         const track = $('#sale-track', root).value.trim();
 
-        // Уменьшаем остаток
         if(hasColors && selectedColorId){
           const c = p.colors.find(x=>x.id===selectedColorId);
           c.sizes[size] = cur - qty;
@@ -2815,6 +2774,10 @@ function openSaleModal(productId){
           p.sizes[size] = cur - qty;
         }
         p.soldCount = (p.soldCount||0) + qty;
+
+        const purchaseTotal = rawPurchase * qty;
+        const deliveryShareTotal = dPU * qty;
+        const profitVal = (price * qty) - purchaseTotal - deliveryShareTotal - deliveryToClient;
 
         const order = {
           id: uid(),
@@ -2827,10 +2790,11 @@ function openSaleModal(productId){
             ? (p.colors.find(x=>x.id===selectedColorId)?.mainPhoto || p.colors.find(x=>x.id===selectedColorId)?.photos?.[0] || null)
             : (p.mainPhotoId || (p.photos&&p.photos[0]) || null),
           size, quantity: qty, price,
-          purchasePrice: unitCost,
-          deliveryCost: delivery,
-          total: qty*price + delivery,
-          profit: (price - unitCost) * qty,
+          purchasePrice: rawPurchase,
+          deliveryShare: dPU,
+          deliveryCost: deliveryToClient,
+          total: qty*price + deliveryToClient,
+          profit: profitVal,
           status, deliveryService: service, trackNumber: track, customer,
           colorName
         };
@@ -2895,6 +2859,16 @@ function openOrderDetail(orderId){
   const o = state.orders.find(x=>x.id===orderId);
   if(!o) return;
   const img = getPhotoURL(o.photoId);
+  const qty = Number(o.quantity)||0;
+  const price = Number(o.price)||0;
+  const purchase = Number(o.purchasePrice)||0;
+  const dShare = Number(o.deliveryShare)||0;
+  const deliveryToClient = Number(o.deliveryCost)||0;
+  const revenue = price * qty;
+  const purchaseSum = purchase * qty;
+  const deliveryShareSum = dShare * qty;
+  const profit = revenue - purchaseSum - deliveryShareSum - deliveryToClient;
+
   const body =
     (img ? '<img src="'+img+'" style="width:100%;aspect-ratio:1.4;object-fit:cover;border-radius:16px;margin-bottom:14px" alt="">' : '') +
     '<div class="info-list">' +
@@ -2904,13 +2878,20 @@ function openOrderDetail(orderId){
       (o.colorName?'<div class="info-item"><div class="k">Цвет</div><div class="v">'+escapeHTML(o.colorName)+'</div></div>':'') +
       (o.productSku?'<div class="info-item"><div class="k">Артикул</div><div class="v">'+escapeHTML(o.productSku)+'</div></div>':'') +
       '<div class="info-item"><div class="k">Размер</div><div class="v">'+escapeHTML(o.size||'—')+'</div></div>' +
-      '<div class="info-item"><div class="k">Количество</div><div class="v">'+o.quantity+' шт.</div></div>' +
-      '<div class="info-item"><div class="k">Цена</div><div class="v">'+fmt(o.price)+'</div></div>' +
-      '<div class="info-item"><div class="k">Доставка</div><div class="v">'+fmt(o.deliveryCost||0)+'</div></div>' +
-      '<div class="info-item"><div class="k">Итого</div><div class="v">'+fmt(o.total)+'</div></div>' +
-      '<div class="info-item"><div class="k">Прибыль</div><div class="v" style="color:var(--green)">'+fmt(o.profit)+'</div></div>' +
+      '<div class="info-item"><div class="k">Количество</div><div class="v">'+qty+' шт.</div></div>' +
+    '</div>' +
+    '<div class="form-section-title mt-16">Расчёт прибыли</div>' +
+    '<div class="profit-calc">' +
+      '<div class="row-pc"><span class="k">Продажа ('+qty+' × '+fmt(price)+')</span><span class="v">'+fmt(revenue)+'</span></div>' +
+      (purchase>0?'<div class="row-pc minus"><span class="k">− Закупка ('+qty+' × '+fmt(purchase)+')</span><span class="v">−'+fmt(purchaseSum)+'</span></div>':'') +
+      (dShare>0?'<div class="row-pc minus"><span class="k">− Доставка поставщика ('+qty+' × '+fmt(dShare)+')</span><span class="v">−'+fmt(deliveryShareSum)+'</span></div>':'') +
+      (deliveryToClient>0?'<div class="row-pc minus"><span class="k">− Доставка клиенту</span><span class="v">−'+fmt(deliveryToClient)+'</span></div>':'') +
+      '<div class="row-pc plus"><span class="k">= Прибыль</span><span class="v">'+(profit>=0?'+':'')+fmt(profit)+'</span></div>' +
+    '</div>' +
+    '<div class="info-list mt-16">' +
+      '<div class="info-item"><div class="k">Итого оплачено клиентом</div><div class="v">'+fmt(o.total)+'</div></div>' +
       (o.customer ? '<div class="info-item"><div class="k">Клиент</div><div class="v">'+escapeHTML(o.customer)+'</div></div>' : '') +
-      (o.deliveryService ? '<div class="info-item"><div class="k">Служба</div><div class="v">'+escapeHTML(o.deliveryService)+'</div></div>' : '') +
+      (o.deliveryService ? '<div class="info-item"><div class="k">Служба доставки</div><div class="v">'+escapeHTML(o.deliveryService)+'</div></div>' : '') +
     '</div>' +
     '<div class="form-section-title mt-16">Статус заказа</div>' +
     '<select id="ord-status" style="margin-top:6px">' +
@@ -3110,7 +3091,7 @@ function viewProfit(){
       <div class="card-head"><div class="card-title">Отчёт о прибыли</div></div>
       <div class="info-list">
         <div class="info-item"><div class="k">Выручка</div><div class="v">${fmt(s.revenue)}</div></div>
-        <div class="info-item"><div class="k">Себестоимость проданного</div><div class="v">−${fmt(s.cogs)}</div></div>
+        <div class="info-item"><div class="k">Себестоимость проданного (закуп + дост.)</div><div class="v">−${fmt(s.cogs)}</div></div>
         <div class="info-item"><div class="k" style="font-weight:700">Валовая прибыль</div><div class="v" style="color:var(--green)">${fmt(s.grossProfit)}</div></div>
         <div class="info-item"><div class="k">Доп. расходы</div><div class="v" style="color:var(--red)">−${fmt(s.expenses)}</div></div>
         <div class="info-item" style="border-top:2px solid var(--border)">
