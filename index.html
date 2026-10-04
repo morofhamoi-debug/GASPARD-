@@ -7,7 +7,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="format-detection" content="telephone=no">
-<title>Магазин G</title>
+<title>Gaspard FASHION</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,600&display=swap" rel="stylesheet">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.js"></script>
 <style>
@@ -474,13 +477,49 @@ select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.o
 }
 .guest-size b{color:var(--text);font-weight:700;margin-left:3px}
 .guest-footer{text-align:center;padding:20px 0;color:var(--text-3);font-size:12px}
+
+/* ============================================================
+   БРЕНД GASPARD FASHION — красивый serif-шрифт
+============================================================ */
+.gaspard-brand{
+  font-family:'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  line-height: 1;
+}
+.gaspard-brand .brand-g{
+  font-style: italic;
+  font-weight: 900;
+  background: linear-gradient(135deg, #0a84ff 0%, #5e5ce6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.gaspard-brand .brand-f{
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0.22em;
+  font-size: 0.72em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  transform: translateY(-0.05em);
+}
+.sidebar-brand .gaspard-brand{ font-size: 20px; }
+.guest-brand-logo{ font-size: 30px; margin-bottom: 6px; display:flex; justify-content:center; }
+.guest-hero h1 .gaspard-brand{ font-size: 30px; }
+.guest-footer .gaspard-brand{ font-size: 13px; }
+.dash-brand{ font-size: 30px; margin-top: 2px; }
 </style>
 </head>
 <body>
 <div id="sync-badge" class="hidden"><span class="dot"></span><span id="sync-text">…</span></div>
 <div id="app">
   <aside id="sidebar">
-    <div class="brand"><div class="logo" data-svg="bag"></div><div>Мой магазин</div></div>
+    <div class="brand sidebar-brand"><div class="logo" data-svg="bag"></div><div class="gaspard-brand"><span class="brand-g">Gaspard</span><span class="brand-f">FASHION</span></div></div>
     <div id="sidebar-nav"></div>
   </aside>
   <main id="main">
@@ -1418,7 +1457,7 @@ function viewGuest(){
     <div class="guest-wrap">
       <div class="guest-hero">
         <div class="brand-icon">${ic('bag', 30, {strokeWidth:1.6})}</div>
-        <h1>Каталог</h1>
+        <h1 class="guest-brand-logo"><span class="gaspard-brand"><span class="brand-g">Gaspard</span><span class="brand-f">FASHION</span></span></h1>
         <p>Товары в наличии</p>
       </div>
 
@@ -1446,7 +1485,7 @@ function viewGuest(){
         </div>
       `}
 
-      <div class="guest-footer">Каталог магазина</div>
+      <div class="guest-footer"><span class="gaspard-brand"><span class="brand-g">Gaspard</span><span class="brand-f">FASHION</span></span></div>
     </div>
   `;
 }
@@ -1696,7 +1735,7 @@ function viewDashboard(){
     <div class="topbar">
       <div>
         <div class="greet">${greeting()}${auth.tgUser && auth.tgUser.first_name ? ', ' + escapeHTML(auth.tgUser.first_name) : ''}</div>
-        <div class="title">Панель магазина</div>
+        <div class="title dash-brand"><span class="gaspard-brand"><span class="brand-g">Gaspard</span><span class="brand-f">FASHION</span></span></div>
       </div>
       <div class="hdr-actions">
         <button class="btn icon" data-action="quick-add-product" title="Добавить товар">${ic('plus',20)}</button>
