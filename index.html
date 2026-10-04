@@ -733,6 +733,20 @@ function colorToCss(hex){
   if(h.startsWith('#')) return h;
   return h;
 }
+/**
+ * Реальная себестоимость одной единицы товара с учётом доставки партии.
+ * Формула: purchasePrice + deliveryCost / purchaseQty
+ * Если доставка не указана или кол-во = 0 — возвращает просто purchasePrice.
+ */
+function effectivePurchasePrice(p){
+  const qty = Number(p.purchaseQty)||0;
+  const cost = Number(p.purchasePrice)||0;
+  const delivery = Number(p.deliveryCost)||0;
+  if(qty > 0 && delivery > 0){
+    return cost + (delivery / qty);
+  }
+  return cost;
+}
 
 /* ============================================================
    AUTH
@@ -905,6 +919,7 @@ function dbToProduct(r){
     purchaseDate: r.purchase_date ? new Date(r.purchase_date).getTime() : Date.now(),
     purchaseQty: Number(r.purchase_qty)||0,
     purchaseTotal: Number(r.purchase_total)||0,
+    deliveryCost: Number(r.delivery_cost)||0,
     description: r.description||'',
     photos: r.photos||[],
     mainPhotoId: r.main_photo||null,
@@ -925,6 +940,7 @@ function productToDb(p){
     purchase_date: p.purchaseDate ? new Date(p.purchaseDate).toISOString() : new Date().toISOString(),
     purchase_qty: p.purchaseQty||0,
     purchase_total: p.purchaseTotal||0,
+    delivery_cost: p.deliveryCost||0,
     description: p.description||null,
     photos: p.photos||[],
     main_photo: p.mainPhotoId||null,
@@ -1293,10 +1309,11 @@ function calcStats(period='all'){
   let stockQty = 0, stockValue = 0;
   for(const p of state.products){
     const sizes = productEffectiveSizes(p);
+    const unit = effectivePurchasePrice(p);
     for(const k in sizes){
       const q = sizes[k];
       if(q == null) continue;
-      if(q > 0){ stockQty += q; stockValue += q * Number(p.purchasePrice||0); }
+      if(q > 0){ stockQty += q; stockValue += q * unit; }
     }
   }
   return {
@@ -1305,7 +1322,7 @@ function calcStats(period='all'){
     avgCheck: orders.length ? revenue/orders.length : 0,
     avgProfit: orders.length ? grossProfit/orders.length : 0,
     stockQty, stockValue,
-    purchases: state.products.reduce((s,p)=>s + Number(p.purchaseTotal||0), 0)
+    purchases: state.products.reduce((s,p)=>s + Number(p.purchaseTotal||0) + Number(p.deliveryCost||0), 0)
   };
 }
 
@@ -1950,7 +1967,9 @@ function productCard(p){
   const img = getPhotoURL(productMainPhoto(p));
   const {total} = productStockSummary(p);
   const st = productStatus(p);
-  const profit = (Number(p.salePrice)||0) - (Number(p.purchasePrice)||0);
+  const unitCost = effectivePurchasePrice(p);
+  const hasDelivery = Number(p.deliveryCost) > 0;
+  const profit = (Number(p.salePrice)||0) - unitCost;
   const sizes = productEffectiveSizes(p);
   const usedSizes = Object.keys(sizes).filter(k=>sizes[k] != null);
   return `
@@ -1972,7 +1991,7 @@ function productCard(p){
         ` : ''}
         <div class="prices">
           <div class="price-sale">${fmt(p.salePrice)}</div>
-          ${p.purchasePrice ? `<div>закуп ${fmt(p.purchasePrice)}</div>` : ''}
+          ${p.purchasePrice ? `<div>${hasDelivery ? 'себест. ' : 'закуп '}${fmt(unitCost)}</div>` : ''}
         </div>
         ${profit>0 ? `<div class="price-profit">+${fmt(profit)} / шт.</div>` : ''}
         <div class="sizes-mini">
@@ -1996,7 +2015,7 @@ function productCard(p){
 }
 
 /* ============================================================
-   PRODUCT FORM (с цветами)
+   PRODUCT FORM (с цветами и доставкой)
 ============================================================ */
 function allSizes(){
   const set = new Set([...BASE_SIZES, ...state.customSizes]);
@@ -2088,6 +2107,10 @@ function openProductForm(productId){
         '<div class="form-row"><label>Количество закуплено</label><input type="number" min="0" step="1" id="f-qty" value="'+(editing?.purchaseQty||'')+'" placeholder="10"></div>' +
         '<div class="form-row"><label>Сумма закупки (всего)</label><input type="number" min="0" step="0.01" id="f-total" value="'+(editing?.purchaseTotal||'')+'" placeholder="40000"></div>' +
       '</div>' +
+      '<div class="form-grid mt-12">' +
+        '<div class="form-row"><label>Доставка за партию, '+escapeHTML(state.settings.currency)+'</label><input type="number" min="0" step="0.01" id="f-delivery" value="'+(editing?.deliveryCost||'')+'" placeholder="430"></div>' +
+        '<div class="form-row"><label>Себестоимость за штуку</label><input type="text" id="f-unit-cost" readonly placeholder="—" style="background:var(--border);cursor:default"></div>' +
+      '</div>' +
       '<div class="form-row"><label>Описание</label><textarea id="f-desc" placeholder="Комментарий о товаре">'+escapeHTML(editing?.description||'')+'</textarea></div>' +
     '</div>';
 
@@ -2162,13 +2185,27 @@ function openProductForm(productId){
       const qtyEl = $('#f-qty', root);
       const priceEl = $('#f-purchase', root);
       const totalEl = $('#f-total', root);
+      const deliveryEl = $('#f-delivery', root);
+      const unitCostEl = $('#f-unit-cost', root);
+      const curSym = state.settings.currency || '₽';
       const recalc = () => {
         const q = Number(qtyEl.value)||0;
         const p = Number(priceEl.value)||0;
+        const d = Number(deliveryEl.value)||0;
         if(q && p) totalEl.value = Math.round(q*p*100)/100;
+        if(unitCostEl){
+          if(q > 0){
+            const unit = p + d/q;
+            unitCostEl.value = (Math.round(unit*100)/100).toLocaleString('ru-RU') + ' ' + curSym;
+          } else {
+            unitCostEl.value = '';
+          }
+        }
       };
       qtyEl.addEventListener('input', recalc);
       priceEl.addEventListener('input', recalc);
+      deliveryEl.addEventListener('input', recalc);
+      recalc();
 
       // Сохранение
       $('#save-product', root).addEventListener('click', async () => {
@@ -2220,6 +2257,7 @@ function openProductForm(productId){
           purchaseDate,
           purchaseQty: Number($('#f-qty', root).value)||0,
           purchaseTotal: Number($('#f-total', root).value)||0,
+          deliveryCost: Number($('#f-delivery', root).value)||0,
           description: $('#f-desc', root).value.trim(),
           photos: formPhotos.slice(),
           mainPhotoId: formMainPhoto || formPhotos[0] || null,
@@ -2450,7 +2488,9 @@ function openProductDetail(productId){
 
     const {total} = productStockSummary(p);
     const st = productStatus(p);
-    const profit = (Number(p.salePrice)||0) - (Number(p.purchasePrice)||0);
+    const unitCost = effectivePurchasePrice(p);
+    const hasDelivery = Number(p.deliveryCost) > 0;
+    const profit = (Number(p.salePrice)||0) - unitCost;
     const supplier = state.suppliers.find(s=>s.id===p.supplierId);
 
     // Размеры — с учётом цвета
@@ -2499,13 +2539,16 @@ function openProductDetail(productId){
 
     '<div class="info-list" style="margin-bottom:14px">' +
       (p.sku ? '<div class="info-item"><div class="k">Артикул</div><div class="v">'+escapeHTML(p.sku)+'</div></div>' : '') +
-      (p.purchasePrice ? '<div class="info-item"><div class="k">Закупка</div><div class="v">'+fmt(p.purchasePrice)+'</div></div>' : '') +
+      (p.purchasePrice ? '<div class="info-item"><div class="k">Закупка у поставщика</div><div class="v">'+fmt(p.purchasePrice)+'</div></div>' : '') +
+      (hasDelivery ? '<div class="info-item"><div class="k">Доставка за партию</div><div class="v">'+fmt(p.deliveryCost)+'</div></div>' : '') +
+      (hasDelivery && Number(p.purchaseQty) > 0 ? '<div class="info-item"><div class="k">Себестоимость за штуку</div><div class="v" style="color:var(--orange)">'+fmt(unitCost)+'</div></div>' : '') +
       (p.salePrice ? '<div class="info-item"><div class="k">Продажа</div><div class="v">'+fmt(p.salePrice)+'</div></div>' : '') +
       (profit>0 ? '<div class="info-item"><div class="k">Прибыль / шт.</div><div class="v" style="color:var(--green)">+'+fmt(profit)+'</div></div>' : '') +
       '<div class="info-item"><div class="k">Всего на складе</div><div class="v">'+total+' шт.</div></div>' +
       (hasColors ? '<div class="info-item"><div class="k">Цветов</div><div class="v">'+p.colors.length+'</div></div>' : '') +
       (p.purchaseQty ? '<div class="info-item"><div class="k">Закуплено</div><div class="v">'+p.purchaseQty+' шт.</div></div>' : '') +
-      (p.purchaseTotal ? '<div class="info-item"><div class="k">Сумма закупки</div><div class="v">'+fmt(p.purchaseTotal)+'</div></div>' : '') +
+      (p.purchaseTotal ? '<div class="info-item"><div class="k">Сумма закупки (у поставщика)</div><div class="v">'+fmt(p.purchaseTotal)+'</div></div>' : '') +
+      (hasDelivery ? '<div class="info-item"><div class="k">Вложено всего</div><div class="v" style="color:var(--accent)">'+fmt(Number(p.purchaseTotal||0) + Number(p.deliveryCost||0))+'</div></div>' : '') +
       (supplier ? '<div class="info-item"><div class="k">Поставщик</div><div class="v">'+escapeHTML(supplier.name)+'</div></div>' : '') +
       (p.purchaseDate ? '<div class="info-item"><div class="k">Дата закупки</div><div class="v">'+fmtDate(p.purchaseDate)+'</div></div>' : '') +
       (p.description ? '<div class="info-item"><div class="k">Описание</div><div class="v" style="font-weight:500;max-width:60%">'+escapeHTML(p.description)+'</div></div>' : '') +
@@ -2625,7 +2668,7 @@ function changeStock(productId, size, delta, colorId){
 }
 
 /* ============================================================
-   SALE MODAL — с выбором цвета
+   SALE MODAL — с выбором цвета и учётом доставки
 ============================================================ */
 function openSaleModal(productId){
   const p = state.products.find(x=>x.id===productId);
@@ -2644,6 +2687,8 @@ function openSaleModal(productId){
   }
 
   let selectedColorId = hasColors ? availColors[0].id : null;
+  const unitCost = effectivePurchasePrice(p);
+  const hasDelivery = Number(p.deliveryCost) > 0;
 
   const sizeOptionsHTML = () => {
     let sizesList = [];
@@ -2675,8 +2720,9 @@ function openSaleModal(productId){
       '<div class="form-row"><label>Количество</label><input type="number" min="1" step="1" id="sale-qty" value="1"></div>' +
       '<div class="form-row"><label>Цена за единицу</label><input type="number" min="0" step="0.01" id="sale-price" value="'+(p.salePrice||'')+'"></div>' +
     '</div>' +
+    (hasDelivery ? '<div class="section-sub" style="margin-top:-4px;margin-bottom:12px">Себестоимость за штуку: <b style="color:var(--orange)">'+fmt(unitCost)+'</b> · Прибыль с продажи: <b style="color:var(--green)">+'+fmt((Number(p.salePrice)||0) - unitCost)+' ₽</b></div>' : '') +
     '<div class="form-grid">' +
-      '<div class="form-row"><label>Доставка</label><input type="number" min="0" step="0.01" id="sale-delivery" value="0"></div>' +
+      '<div class="form-row"><label>Доставка (от вас клиенту)</label><input type="number" min="0" step="0.01" id="sale-delivery" value="0"></div>' +
       '<div class="form-row"><label>Клиент</label><input id="sale-customer" placeholder="Имя / ник"></div>' +
     '</div>' +
     '<div class="form-row"><label>Статус</label><select id="sale-status">' +
@@ -2781,10 +2827,10 @@ function openSaleModal(productId){
             ? (p.colors.find(x=>x.id===selectedColorId)?.mainPhoto || p.colors.find(x=>x.id===selectedColorId)?.photos?.[0] || null)
             : (p.mainPhotoId || (p.photos&&p.photos[0]) || null),
           size, quantity: qty, price,
-          purchasePrice: Number(p.purchasePrice)||0,
+          purchasePrice: unitCost,
           deliveryCost: delivery,
           total: qty*price + delivery,
-          profit: (price - (Number(p.purchasePrice)||0)) * qty,
+          profit: (price - unitCost) * qty,
           status, deliveryService: service, trackNumber: track, customer,
           colorName
         };
@@ -3125,7 +3171,7 @@ function viewSuppliers(){
       ? emptyState('truck','Поставщиков пока нет','Добавьте первого поставщика, чтобы привязать его к товарам','add-supplier','+ Добавить поставщика')
       : list.map(sup => {
         const products = state.products.filter(p=>p.supplierId === sup.id);
-        const purchases = products.reduce((s,p)=>s+Number(p.purchaseTotal||0),0);
+        const purchases = products.reduce((s,p)=>s+Number(p.purchaseTotal||0)+Number(p.deliveryCost||0),0);
         const last = products.map(p=>p.purchaseDate).filter(Boolean).sort((a,b)=>b-a)[0];
         return `
           <div class="row" data-action="open-supplier" data-id="${sup.id}">
